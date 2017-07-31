@@ -4,14 +4,14 @@ const express = require('express');
 const app = express();
 
 // Step 3: Route handler:
-// http GET request, set url path to '/'
-// lambda expr sends JSON request object {hi: 'there'}
+  // http GET request, set url path to '/'
+  // lambda expr sends JSON request object {hi: 'there'}
 app.get('/', (req, res) => {
-	res.send({ hi: 'there' });
+	res.send({ model: 'Mazda' });
 });
 
 // Step 4: Store heroku's unique PORT environment variable to const PORT
-// of if app not deployed (working locally), set PORT to 5000
+  // of if app not deployed (working locally), set PORT to 5000
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
 
@@ -28,4 +28,14 @@ app.listen(PORT);
 */
 
 // Step 7: Create a .gitignore file so we don't commit node_modules or other
-// dependencies to github or heroku
+  // dependencies to github or heroku
+// Step 8: Commit all changes to github
+// Step 9: Create new heroku app
+  // cmd: heroku login
+  // heroku create
+  // copy second link (containing git...)
+// Step 10: Deploy App with git
+  // Add git remote using step 9 link, push to git, open the web page
+  // git remote add heroku **linik**
+  // git push heroku master
+  // heroku open
