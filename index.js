@@ -1,5 +1,11 @@
 // Step 1: Get access to the Express lib
 const express = require('express');
+// Get access to Mongoose
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+// MongoDB URI used to connect driver to MongoDB.  Found on mLab buckshot-dev db
+  // replace <dbuser>:<dbpassword> with user and pw
+mongoose.connect(keys.mongoDbURI);
 // passport.js must be required in order for the code to run. Since it's not
   // returning anything, we don't assignt it to any const, only require
 require('./services/passport');
