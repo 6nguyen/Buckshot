@@ -1,3 +1,19 @@
+const passport = require('passport');
+
+module.exports = (app) => {
+  app.get(
+  	'/auth/google',
+  	passport.authenticate('google', {
+  		scope: ['profile', 'email']
+  	})
+  );
+
+  app.get('/auth/google/callback', passport.authenticate('google'));
+};
+
+
+// ***************** DOCUMENTATION *****************************************
+/*
 // since we are using passport library, we must require it and store in const
 const passport = require('passport');
 
@@ -20,3 +36,5 @@ module.exports = (app) => {
   app.get('/auth/google/callback', passport.authenticate('google'));
 
 };
+
+*/

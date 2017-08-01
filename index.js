@@ -1,3 +1,20 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+
+
+mongoose.connect(keys.mongoDbURI);
+
+require('./services/passport');
+
+const app = express();
+require('./routes/authRoutes')(app);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT);
+
+//  ****************************** DOCUMENTATION *************************************
+/*
 // Step 1: Get access to the Express lib
 const express = require('express');
 // Get access to Mongoose
@@ -23,3 +40,4 @@ require('./routes/authRoutes')(app);
   // of if app not deployed (working locally), set PORT to 3000
 const PORT = process.env.PORT || 3000;
 app.listen(PORT);
+*/
