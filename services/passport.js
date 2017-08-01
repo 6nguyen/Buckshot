@@ -7,6 +7,24 @@ const keys = require('../config/keys');
 // mongoose.model is called with one arg, we are getting a model/schema
 const User =  mongoose.model('users');
 
+// Give user a unique id.  googleID is only used for authentication.  user.id is used
+	// to uniquely identify user inside the cookie. It's found in $oid of mLab collection:users8
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
+
+
+// Turn the unique id back into a user.  id is the user.id in serializeUser
+	// Find a user by their ID, use .then() to return a promise since this is async.
+	// use done(null, user) to return the user and pass in user as lambda expr.
+passport.deserializeUser((id, done) => {
+	User.findById(id).then((user) => {
+		done(null, user);
+	});
+});
+
+// Tell passport it needs to use cookies to manage authentication inside the web app
+
 passport.use(
 	new GoogleStrategy(
 		{
@@ -18,13 +36,18 @@ passport.use(
 			// User.findOne returns a JS Promise, which is used in JS to handle async code
 			// the model class searchedUser is used to find out if a matching user was found
 			// if searchedUser is found, do nothing.  else create a new user
+			// done(error, what we return)
 		(accessToken, refreshToken, profile, done) => {
-			User.findOne({ googleID: profile.id }).then((searchedUser) => {
+			User.findOne({ googleID: profile.id }).then(
+				(searchedUser) => {
 				if (searchedUser){
 					// the user matches an existing id, do nothing
+					done(null, searchedUser);
 				} else {
 					// usser not found.  create new model instance
-					new User({ googleID: profile.id }).save();
+					new User({ googleID: profile.id }).save().then(
+						(newUser) => {done(null, newUser)}
+					);
 				}
 			})
 		}
