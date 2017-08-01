@@ -29,30 +29,37 @@ passport.use(
 			clientSecret: keys.googleClientSecret,
 			callbackURL: '/auth/google/callback'
 		},
-		accessToken => {
-			console.log(accessToken);
+		(accessToken, refreshToken, profile, done) => {
+			console.log('accessToken: ', accessToken);
+			console.log('refreshToken: ', refreshToken);
+			console.log('profile: ', profile);
 		}
 	)
 );
 
-// Step 13: Route handler
+// Step 14: Route handler
   // when a user attempts to log in via https...auth/google, take them into the oAuth flow
   // Tell passport to authenticate the user using the 'google' strategy.
   // Scope is the permission scope we ask from the user's account
+  // User is authenticated and Google sends Server a code in URL
 app.get(
-	'auth/google/',
+	'/auth/google',
 	passport.authenticate('google', {
 		scope: ['profile', 'email']
 	})
 );
 
 
+// Step 15: Route Handler to handle auth/google/callback and code
+  // the code in the URL tells passport.authenticate that user isn't logging in for
+  // the first time. So they must be trying to turn the code into a user profile.
+app.get('/auth/google/callback', passport.authenticate('google'));
 
 
 
 // Step 4: Store heroku's unique PORT environment variable to const PORT
-  // of if app not deployed (working locally), set PORT to 5000
-const PORT = process.env.PORT || 5000;
+  // of if app not deployed (working locally), set PORT to 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT);
 
 // Step 5: tell heroku what version of node we're using in server/package.json
