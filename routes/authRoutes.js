@@ -9,6 +9,13 @@ module.exports = (app) => {
   );
 
   app.get('/auth/google/callback', passport.authenticate('google'));
+
+// lambda expr uses args request, response
+// sends user log out info when done
+  app.get('/api/logout', (req, res) => {
+    req.logout();
+    res.send(req.user);
+  });
 };
 
 
@@ -34,6 +41,13 @@ module.exports = (app) => {
     // the code in the URL tells passport.authenticate that user isn't logging in for
     // the first time. So they must be trying to turn the code into a user profile.
   app.get('/auth/google/callback', passport.authenticate('google'));
+
+  // lambda expr uses args request, response
+  // sends user log out info when done
+    app.get('/api/logout', (req, res) => {
+      res.logout();
+      res.send(req.user);
+    });
 
 };
 
