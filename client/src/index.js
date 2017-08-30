@@ -5,12 +5,14 @@ import { createStore, applyMiddleware } from 'redux';
 // Don't use relative path '../node_modules/'
   // Webpack assumes when no relative path, file's in node_modules folder
 import 'materialize-css/dist/css/materialize.min.css';
+import reduxThunk from 'redux-thunk';
 
 import App from './components/App';
 import reducers from './reducers';
 
+
 // create a Redux Store (like a data storage)
-const store = createStore( () => [], applyMiddleware() );
+const store = createStore( () => [], applyMiddleware(reduxThunk) );
 
 // hook up the Redux Store to our react app using the Provider tag
 // Provider is a react component that reads changes from redux store
