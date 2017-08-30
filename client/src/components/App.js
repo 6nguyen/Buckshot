@@ -8,7 +8,7 @@ const LandingPage = () => <h2>Landing Page</h2>
 
 const App = () => {
   return (
-    <div>
+    <div className="container">
     {/* BrowserRouter can only have ONE child, so put everything in a div */}
       <BrowserRouter>
         <div>
