@@ -7,16 +7,19 @@ const keys = require('../config/keys');
 // mongoose.model is called with one arg, we are getting a model/schema
 const User =  mongoose.model('users');
 
-// Give user a unique id.  googleID is only used for authentication.  user.id is used
-	// to uniquely identify user inside the cookie. It's found in $oid of mLab collection:users8
+// Give user a unique id.  googleID is only used for authentication.  newUser.id is used
+	// to uniquely identify user inside the cookie/Mongo db. It's found in $oid of mLab
+	// collection:users8
+	// takes a Mongoose model instance and turns it into an id
 passport.serializeUser((user, done) => {
 	done(null, user.id);
 });
 
 
-// Turn the unique id back into a user.  id is the user.id in serializeUser
+// Turn the unique id back into a user.  id is the newUser.id in serializeUser
 	// Find a user by their ID, use .then() to return a promise since this is async.
-	// use done(null, user) to return the user and pass in user as lambda expr.
+	// use done(null, user) to return the newUser and pass in user as lambda expr.
+	// takes a user id and turns it into a mongo model instance
 passport.deserializeUser((id, done) => {
 	User.findById(id).then((user) => {
 		done(null, user);
@@ -46,7 +49,7 @@ passport.use(
 				} else {
 					// usser not found.  create new model instance
 					new User({ googleID: profile.id }).save().then(
-						(newUser) => {done(null, newUser)}
+						(user) => {done(null, user)}
 					);
 				}
 			})

@@ -1,20 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const keys = require('./config/keys');
+require('./models/User');           // DO NOT change order or require statements
+require('./services/passport');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-const keys = require('./config/keys');
-require('./models/User');
-
 
 mongoose.connect(keys.mongoDbURI);
 
-require('./services/passport');
+
+
 
 const app = express();
 
 app.use(
   cookieSession({
-    maxAge: 30 * 60 * 60 * 24 * 1000,
+    maxAge: 60 * 60 * 24 * 30 * 1000,
     keys: [keys.cookieKey]
   })
 );
