@@ -40,19 +40,19 @@ passport.use(
 			// the model class searchedUser is used to find out if a matching user was found
 			// if searchedUser is found, do nothing.  else create a new user
 			// done(error, what we return)
-		(accessToken, refreshToken, profile, done) => {
-			User.findOne({ googleID: profile.id }).then(
-				(searchedUser) => {
-				if (searchedUser){
-					// the user matches an existing id, do nothing
-					done(null, searchedUser);
-				} else {
-					// usser not found.  create new model instance
-					new User({ googleID: profile.id }).save().then(
-						(user) => {done(null, user)}
-					);
-				}
-			})
+		// REFACTOR:  use ES2015 syntax for async functions (node v8.1.1+)
+			// instead of using .then() to resolve promises, we simply put
+			// await in front of all lines returning a promise, then store
+			// them into a constant
+		async (accessToken, refreshToken, profile, done) => {
+			const searchedUser = await User.findOne({ googleID: profile.id })
+			if (searchedUser){
+				// the user matches an existing id, do nothing
+				return done(null, searchedUser);
+			}
+			// usser not found.  create new model instance
+			const user = await new User({ googleID: profile.id }).save()
+			done(null, user)
 		}
 	)
 );
