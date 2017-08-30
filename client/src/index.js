@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+// Don't use relative path '../node_modules/'
+  // Webpack assumes when no relative path, file's in node_modules folder
+import 'materialize-css/dist/css/materialize.min.css';
 
 import App from './components/App';
 import reducers from './reducers';
