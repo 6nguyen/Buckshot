@@ -50,7 +50,7 @@ passport.use(
 				// the user matches an existing id, do nothing
 				return done(null, searchedUser);
 			}
-			// usser not found.  create new model instance
+			// user not found.  create new mo	del instance
 			const user = await new User({ googleID: profile.id }).save()
 			done(null, user)
 		}
