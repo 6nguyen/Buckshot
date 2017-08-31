@@ -2,12 +2,12 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "prox": {
+  "proxy": {
     "/auth/google": {
-      "target": "http://localhost/5000"
+      "target": "http://localhost:5000"
     },
     "/api/*": {
-      "target": "http://localhost/5000"
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {
