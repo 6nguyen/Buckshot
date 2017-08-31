@@ -2,6 +2,7 @@
   // used to show user dashboard components etc using react router
 
 export default function(state = {}, action) {
+  console.log(action);
   switch(action.type) {
     default:
       return state;

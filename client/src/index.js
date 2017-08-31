@@ -12,7 +12,7 @@ import reducers from './reducers';
 
 
 // create a Redux Store (like a data storage)
-const store = createStore( () => [], applyMiddleware(reduxThunk) );
+const store = createStore( reducers, {}, applyMiddleware(reduxThunk) );
 
 // hook up the Redux Store to our react app using the Provider tag
 // Provider is a react component that reads changes from redux store
